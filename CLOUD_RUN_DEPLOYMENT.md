@@ -48,11 +48,16 @@ gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
 
 ### 3. Cloud Build Service Account
 
+**Note**: The Cloud Build service account is automatically created when you enable the Cloud Build API. You don't need to create it manually.
+
 Cloud Build needs specific roles to build and deploy:
 
 ```bash
-# Get the Cloud Build service account
-CLOUD_BUILD_SA="YOUR_PROJECT_NUMBER@cloudbuild.gserviceaccount.com"
+# Get the Cloud Build service account (automatically created)
+# Note: This uses PROJECT_NUMBER, not PROJECT_ID
+PROJECT_NUMBER=$(gcloud projects describe YOUR_PROJECT_ID --format="value(projectNumber)")
+
+CLOUD_BUILD_SA="${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com"
 
 # Grant necessary roles to Cloud Build
 gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
